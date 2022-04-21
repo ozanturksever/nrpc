@@ -10,7 +10,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/nats-rpc/nrpc"
+	"github.com/ozanturksever/nats-rpc/nrpc"
 
 	"google.golang.org/protobuf/proto"
 	descriptor "google.golang.org/protobuf/types/descriptorpb"
@@ -39,7 +39,8 @@ func getGoPackage(fd *descriptor.FileDescriptorProto) string {
 		if len(parts) > 2 {
 			log.Fatalf(
 				"protoc-gen-nrpc: go_package '%s' contains more than 1 ';'",
-				pkg)
+				pkg,
+			)
 		}
 		pkg = parts[1]
 	}
@@ -186,8 +187,10 @@ func lookupMessageType(name string) (*descriptor.FileDescriptorProto, *descripto
 			}
 		}
 		if !found {
-			log.Fatalf("No such nested type '%s' in '%s.%s'",
-				token, strings.Join(pkgpath, "."), strings.Join(path[:i+1], "."))
+			log.Fatalf(
+				"No such nested type '%s' in '%s.%s'",
+				token, strings.Join(pkgpath, "."), strings.Join(path[:i+1], "."),
+			)
 		}
 	}
 	return fd, d
@@ -278,8 +281,10 @@ var funcMap = template.FuncMap{
 		}
 		var result []string
 		for importName, goPkg := range imports {
-			result = append(result,
-				fmt.Sprintf("%s \"%s\"",
+			result = append(
+				result,
+				fmt.Sprintf(
+					"%s \"%s\"",
 					importName,
 					goPkg,
 				),
@@ -463,10 +468,12 @@ func main() {
 
 		currentFile = nil
 
-		response.File = append(response.File, &plugin.CodeGeneratorResponse_File{
-			Name:    proto.String(goFileName(fd)),
-			Content: proto.String(buf.String()),
-		})
+		response.File = append(
+			response.File, &plugin.CodeGeneratorResponse_File{
+				Name:    proto.String(goFileName(fd)),
+				Content: proto.String(buf.String()),
+			},
+		)
 	}
 
 	if data, err = proto.Marshal(&response); err != nil {

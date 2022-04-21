@@ -1,6 +1,6 @@
 module github.com/ozanturksever/nrpc
 
-go 1.11
+go 1.18
 
 require (
 	github.com/golang/protobuf v1.4.0
