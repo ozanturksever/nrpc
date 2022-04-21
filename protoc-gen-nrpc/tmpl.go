@@ -25,7 +25,7 @@ import (
 )
 
 {{- range .Service}}
-
+// change test
 // {{.GetName}}Server is the interface that providers of the service
 // {{.GetName}} should implement.
 type {{.GetName}}Server interface {
