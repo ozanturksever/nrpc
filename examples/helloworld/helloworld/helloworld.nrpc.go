@@ -6,11 +6,12 @@ import (
 	"log"
 	"time"
 
-	"google.golang.org/protobuf/proto"
 	"github.com/nats-io/nats.go"
 	"github.com/ozanturksever/nrpc"
+	"google.golang.org/protobuf/proto"
 )
 
+// change test
 // GreeterServer is the interface that providers of the service
 // Greeter should implement.
 type GreeterServer interface {
@@ -65,8 +66,7 @@ func (h *GreeterHandler) Handler(msg *nats.Msg) {
 	request := nrpc.NewRequest(ctx, h.nc, msg.Subject, msg.Reply)
 	// extract method name & encoding from subject
 	_, _, name, tail, err := nrpc.ParseSubject(
-		"", 0, "Greeter", 0, msg.Subject,
-	)
+		"", 0, "Greeter", 0, msg.Subject)
 	if err != nil {
 		log.Printf("GreeterHanlder: Greeter subject parsing failed: %v", err)
 		return

@@ -553,6 +553,6 @@ func TestCaptureErrors(t *testing.T) {
 			if msg != nil {
 				t.Error("Expected a nil msg, got", msg)
 			}
-		}
+		},
 	)
 }

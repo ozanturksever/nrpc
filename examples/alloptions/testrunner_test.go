@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nats-io/gnatsd/logger"
-	natsServer "github.com/nats-io/gnatsd/server"
+	"github.com/nats-io/nats-server/v2/logger"
+	natsServer "github.com/nats-io/nats-server/v2/server"
 )
 
 var natsURL string
@@ -16,7 +16,8 @@ func TestMain(m *testing.M) {
 	gnatsd := natsServer.New(&natsServer.Options{Port: natsServer.RANDOM_PORT})
 	gnatsd.SetLogger(
 		logger.NewStdLogger(false, false, false, false, false),
-		false, false)
+		false, false,
+	)
 	go gnatsd.Start()
 	defer gnatsd.Shutdown()
 
