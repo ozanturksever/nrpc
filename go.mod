@@ -1,4 +1,4 @@
-module github.com/nats-rpc/nrpc
+module github.com/ozanturksever/nrpc
 
 go 1.11
 
