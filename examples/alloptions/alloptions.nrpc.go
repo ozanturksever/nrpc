@@ -8,8 +8,8 @@ import (
 
 	"google.golang.org/protobuf/proto"
 	"github.com/nats-io/nats.go"
-	github_com_nats_rpc_nrpc "github.com/ozanturksever/nats-rpc/nrpc"
-	"github.com/ozanturksever/nats-rpc/nrpc"
+	github_com_nats_rpc_nrpc "github.com/ozanturksever/nrpc"
+	"github.com/ozanturksever/nrpc"
 )
 
 // SvcCustomSubjectServer is the interface that providers of the service

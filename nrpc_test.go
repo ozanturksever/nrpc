@@ -12,7 +12,7 @@ import (
 	"github.com/nats-io/nats.go"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/ozanturksever/nats-rpc/nrpc"
+	"github.com/ozanturksever/nrpc"
 )
 
 //go:generate protoc --go_out=. --go_opt=paths=source_relative nrpc_test.proto
@@ -407,18 +407,18 @@ func compareStringSlices(t *testing.T, expected, actual []string) {
 
 func TestParseSubject(t *testing.T) {
 	for i, tt := range []struct {
-		pkgSubject string
+		pkgSubject     string
 		pkgParamsCount int
-		svcSubject string
+		svcSubject     string
 		svcParamsCount int
-		mtParamsCount int
-		subject string
-		pkgParams []string
-		svcParams []string
-		mtParams []string
-		name string
-		encoding string
-		err string
+		mtParamsCount  int
+		subject        string
+		pkgParams      []string
+		svcParams      []string
+		mtParams       []string
+		name           string
+		encoding       string
+		err            string
 	}{
 		{"", 0, "foo", 0, 0, "foo.bar", nil, nil, nil, "bar", "protobuf", ""},
 		{"", 0, "foo", 0, 0, "foo.bar.protobuf", nil, nil, nil, "bar", "protobuf", ""},
@@ -552,6 +552,7 @@ func TestCaptureErrors(t *testing.T) {
 			}
 			if msg != nil {
 				t.Error("Expected a nil msg, got", msg)
+			}
 		}
-	})
+	)
 }

@@ -9,7 +9,7 @@ import (
 
 	// This is the package containing the generated *.pb.go and *.nrpc.go
 	// files.
-	"github.com/ozanturksever/nats-rpc/nrpc/examples/helloworld/helloworld"
+	"github.com/ozanturksever/nrpc/examples/helloworld/helloworld"
 )
 
 func TestBasic(t *testing.T) {

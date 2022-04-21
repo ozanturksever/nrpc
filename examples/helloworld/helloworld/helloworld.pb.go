@@ -22,7 +22,7 @@ package helloworld
 
 import (
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/ozanturksever/nats-rpc/nrpc"
+	_ "github.com/ozanturksever/nrpc"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

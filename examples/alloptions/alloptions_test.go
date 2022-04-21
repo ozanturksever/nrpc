@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/nats-io/nats.go"
-	"github.com/ozanturksever/nats-rpc/nrpc"
+	"github.com/ozanturksever/nrpc"
 	"github.com/stretchr/testify/require"
 )
 
