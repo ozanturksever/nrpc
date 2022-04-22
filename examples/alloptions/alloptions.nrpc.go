@@ -12,9 +12,9 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-// change test
 // SvcCustomSubjectServer is the interface that providers of the service
 // SvcCustomSubject should implement.
+
 type SvcCustomSubjectServer interface {
 	MtSimpleReply(ctx context.Context, req StringArg) (resp SimpleStringReply, err error)
 	MtVoidReply(ctx context.Context, req StringArg) (err error)
@@ -29,6 +29,7 @@ type SvcCustomSubjectHandler struct {
 	workers *nrpc.WorkerPool
 	nc      nrpc.NatsConn
 	server  SvcCustomSubjectServer
+	subject string
 
 	encodings []string
 }
@@ -42,7 +43,6 @@ func NewSvcCustomSubjectHandler(ctx context.Context, nc nrpc.NatsConn, s SvcCust
 		encodings: []string{"protobuf"},
 	}
 }
-
 func NewSvcCustomSubjectConcurrentHandler(workers *nrpc.WorkerPool, nc nrpc.NatsConn, s SvcCustomSubjectServer) *SvcCustomSubjectHandler {
 	return &SvcCustomSubjectHandler{
 		workers: workers,
@@ -55,7 +55,6 @@ func NewSvcCustomSubjectConcurrentHandler(workers *nrpc.WorkerPool, nc nrpc.Nats
 func (h *SvcCustomSubjectHandler) SetEncodings(encodings []string) {
 	h.encodings = encodings
 }
-
 func (h *SvcCustomSubjectHandler) Subject() string {
 	return "root.*.custom_subject.>"
 }
@@ -89,6 +88,7 @@ func (h *SvcCustomSubjectHandler) Handler(msg *nats.Msg) {
 	// extract method name & encoding from subject
 	pkgParams, _, name, tail, err := nrpc.ParseSubject(
 		"root", 1, "custom_subject", 0, msg.Subject)
+
 	if err != nil {
 		log.Printf("SvcCustomSubjectHanlder: SvcCustomSubject subject parsing failed: %v", err)
 		return
@@ -376,9 +376,9 @@ func (c *SvcCustomSubjectClient) MtVoidReqStreamedReply(
 	return err
 }
 
-// change test
 // SvcSubjectParamsServer is the interface that providers of the service
 // SvcSubjectParams should implement.
+
 type SvcSubjectParamsServer interface {
 	MtWithSubjectParams(ctx context.Context, mp1 string, mp2 string) (resp SimpleStringReply, err error)
 	MtStreamedReplyWithSubjectParams(ctx context.Context, mp1 string, mp2 string, pushRep func(SimpleStringReply)) (err error)
@@ -392,6 +392,7 @@ type SvcSubjectParamsHandler struct {
 	workers *nrpc.WorkerPool
 	nc      nrpc.NatsConn
 	server  SvcSubjectParamsServer
+	subject string
 
 	encodings []string
 }
@@ -405,7 +406,6 @@ func NewSvcSubjectParamsHandler(ctx context.Context, nc nrpc.NatsConn, s SvcSubj
 		encodings: []string{"protobuf"},
 	}
 }
-
 func NewSvcSubjectParamsConcurrentHandler(workers *nrpc.WorkerPool, nc nrpc.NatsConn, s SvcSubjectParamsServer) *SvcSubjectParamsHandler {
 	return &SvcSubjectParamsHandler{
 		workers: workers,
@@ -418,7 +418,6 @@ func NewSvcSubjectParamsConcurrentHandler(workers *nrpc.WorkerPool, nc nrpc.Nats
 func (h *SvcSubjectParamsHandler) SetEncodings(encodings []string) {
 	h.encodings = encodings
 }
-
 func (h *SvcSubjectParamsHandler) Subject() string {
 	return "root.*.svcsubjectparams.*.>"
 }
@@ -452,6 +451,7 @@ func (h *SvcSubjectParamsHandler) Handler(msg *nats.Msg) {
 	// extract method name & encoding from subject
 	pkgParams, svcParams, name, tail, err := nrpc.ParseSubject(
 		"root", 1, "svcsubjectparams", 1, msg.Subject)
+
 	if err != nil {
 		log.Printf("SvcSubjectParamsHanlder: SvcSubjectParams subject parsing failed: %v", err)
 		return
@@ -709,9 +709,9 @@ func (c *SvcSubjectParamsClient) MtNoRequestWParamsSubscribeChan(
 	return ch, sub, err
 }
 
-// change test
 // NoRequestServiceServer is the interface that providers of the service
 // NoRequestService should implement.
+
 type NoRequestServiceServer interface {
 }
 
@@ -722,6 +722,7 @@ type NoRequestServiceHandler struct {
 	workers *nrpc.WorkerPool
 	nc      nrpc.NatsConn
 	server  NoRequestServiceServer
+	subject string
 
 	encodings []string
 }
@@ -735,7 +736,6 @@ func NewNoRequestServiceHandler(ctx context.Context, nc nrpc.NatsConn, s NoReque
 		encodings: []string{"protobuf"},
 	}
 }
-
 func NewNoRequestServiceConcurrentHandler(workers *nrpc.WorkerPool, nc nrpc.NatsConn, s NoRequestServiceServer) *NoRequestServiceHandler {
 	return &NoRequestServiceHandler{
 		workers: workers,
@@ -748,7 +748,6 @@ func NewNoRequestServiceConcurrentHandler(workers *nrpc.WorkerPool, nc nrpc.Nats
 func (h *NoRequestServiceHandler) SetEncodings(encodings []string) {
 	h.encodings = encodings
 }
-
 func (h *NoRequestServiceHandler) Subject() string {
 	return "root.*.norequestservice.>"
 }
@@ -868,8 +867,10 @@ func NewClient(nc nrpc.NatsConn, pkgParaminstance string) *Client {
 		pkgSubject:       "root",
 		pkgParaminstance: pkgParaminstance,
 	}
-	c.SvcCustomSubject = NewSvcCustomSubjectClient(nc, c.pkgParaminstance)
-	c.NoRequestService = NewNoRequestServiceClient(nc, c.pkgParaminstance)
+	c.SvcCustomSubject = NewSvcCustomSubjectClient(
+		nc, c.pkgParaminstance)
+	c.NoRequestService = NewNoRequestServiceClient(
+		nc, c.pkgParaminstance)
 	return &c
 }
 

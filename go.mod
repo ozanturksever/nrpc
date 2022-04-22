@@ -7,6 +7,7 @@ require (
 	github.com/nats-io/nats-server/v2 v2.8.0
 	github.com/nats-io/nats.go v1.14.0
 	github.com/prometheus/client_golang v1.12.1
+	github.com/ryboe/q v1.0.16
 	github.com/stretchr/testify v1.7.1
 	google.golang.org/protobuf v1.28.0
 )
@@ -16,6 +17,8 @@ require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/klauspost/compress v1.14.4 // indirect
+	github.com/kr/pretty v0.3.0 // indirect
+	github.com/kr/text v0.2.0 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/minio/highwayhash v1.0.2 // indirect
 	github.com/nats-io/jwt/v2 v2.2.1-0.20220330180145-442af02fd36a // indirect
@@ -25,6 +28,7 @@ require (
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.32.1 // indirect
 	github.com/prometheus/procfs v0.7.3 // indirect
+	github.com/rogpeppe/go-internal v1.6.1 // indirect
 	golang.org/x/crypto v0.0.0-20220112180741-5e0467b6c7ce // indirect
 	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
 	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11 // indirect

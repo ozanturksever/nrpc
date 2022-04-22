@@ -11,7 +11,6 @@ import (
 	"text/template"
 
 	"github.com/ozanturksever/nrpc"
-
 	"google.golang.org/protobuf/proto"
 	descriptor "google.golang.org/protobuf/types/descriptorpb"
 	plugin "google.golang.org/protobuf/types/pluginpb"
@@ -306,6 +305,15 @@ var funcMap = template.FuncMap{
 			return value
 		}
 		return nil
+	},
+	"IsCustomSubject": func(sd *descriptor.ServiceDescriptorProto) bool {
+		if opts := sd.GetOptions(); opts != nil {
+			s := proto.GetExtension(opts, nrpc.E_ServiceCustomSubject)
+			if value, ok := s.(bool); ok {
+				return value
+			}
+		}
+		return false
 	},
 	"GetServiceSubject": func(sd *descriptor.ServiceDescriptorProto) string {
 		if opts := sd.GetOptions(); opts != nil {

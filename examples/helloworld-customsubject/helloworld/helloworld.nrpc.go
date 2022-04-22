@@ -30,20 +30,22 @@ type GreeterHandler struct {
 	encodings []string
 }
 
-func NewGreeterHandler(ctx context.Context, nc nrpc.NatsConn, s GreeterServer) *GreeterHandler {
+func NewGreeterHandler(ctx context.Context, subject string, nc nrpc.NatsConn, s GreeterServer) *GreeterHandler {
 	return &GreeterHandler{
-		ctx:    ctx,
-		nc:     nc,
-		server: s,
+		ctx:     ctx,
+		nc:      nc,
+		server:  s,
+		subject: subject,
 
 		encodings: []string{"protobuf"},
 	}
 }
-func NewGreeterConcurrentHandler(workers *nrpc.WorkerPool, nc nrpc.NatsConn, s GreeterServer) *GreeterHandler {
+func NewGreeterConcurrentHandler(workers *nrpc.WorkerPool, subject string, nc nrpc.NatsConn, s GreeterServer) *GreeterHandler {
 	return &GreeterHandler{
 		workers: workers,
 		nc:      nc,
 		server:  s,
+		subject: subject,
 	}
 }
 
@@ -52,7 +54,7 @@ func (h *GreeterHandler) SetEncodings(encodings []string) {
 	h.encodings = encodings
 }
 func (h *GreeterHandler) Subject() string {
-	return "Greeter.>"
+	return h.subject + ".>"
 }
 
 func (h *GreeterHandler) Handler(msg *nats.Msg) {
@@ -64,8 +66,7 @@ func (h *GreeterHandler) Handler(msg *nats.Msg) {
 	}
 	request := nrpc.NewRequest(ctx, h.nc, msg.Subject, msg.Reply)
 	// extract method name & encoding from subject
-	_, _, name, tail, err := nrpc.ParseSubject(
-		"", 0, "Greeter", 0, msg.Subject)
+	name, tail, err := nrpc.ParseSubjectCustom(msg.Subject)
 
 	if err != nil {
 		log.Printf("GreeterHanlder: Greeter subject parsing failed: %v", err)
@@ -134,10 +135,11 @@ type GreeterClient struct {
 	Timeout  time.Duration
 }
 
-func NewGreeterClient(nc nrpc.NatsConn) *GreeterClient {
+func NewGreeterClient(subject string, nc nrpc.NatsConn) *GreeterClient {
 	return &GreeterClient{
-		nc:       nc,
-		Subject:  "Greeter",
+		nc:      nc,
+		Subject: subject,
+
 		Encoding: "protobuf",
 		Timeout:  5 * time.Second,
 	}
@@ -170,6 +172,7 @@ func NewClient(nc nrpc.NatsConn) *Client {
 		defaultTimeout:  5 * time.Second,
 	}
 	c.Greeter = NewGreeterClient(
+		"",
 		nc)
 	return &c
 }

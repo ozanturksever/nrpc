@@ -25,9 +25,11 @@ import (
 )
 
 {{- range .Service}}
-// change test
+{{- $isServiceCustomSubject := IsCustomSubject .}}
+
 // {{.GetName}}Server is the interface that providers of the service
 // {{.GetName}} should implement.
+
 type {{.GetName}}Server interface {
 	{{- range .Method}}
 	{{- if ne .GetInputType ".nrpc.NoRequest"}}
@@ -110,10 +112,31 @@ type {{.GetName}}Handler struct {
 	workers *nrpc.WorkerPool
 	nc      nrpc.NatsConn
 	server  {{.GetName}}Server
+	subject string
 
 	encodings []string
 }
 
+{{- if $isServiceCustomSubject }}
+func New{{.GetName}}Handler(ctx context.Context, subject string, nc nrpc.NatsConn, s {{.GetName}}Server) *{{.GetName}}Handler {
+	return &{{.GetName}}Handler{
+		ctx:    ctx,
+		nc:     nc,
+		server: s,
+        subject: subject,
+
+		encodings: []string{"protobuf"},
+	}
+}
+func New{{.GetName}}ConcurrentHandler(workers *nrpc.WorkerPool, subject string, nc nrpc.NatsConn, s {{.GetName}}Server) *{{.GetName}}Handler {
+	return &{{.GetName}}Handler{
+		workers: workers,
+		nc:      nc,
+		server:  s,
+        subject: subject,
+	}
+}
+{{ else }}
 func New{{.GetName}}Handler(ctx context.Context, nc nrpc.NatsConn, s {{.GetName}}Server) *{{.GetName}}Handler {
 	return &{{.GetName}}Handler{
 		ctx:    ctx,
@@ -123,7 +146,6 @@ func New{{.GetName}}Handler(ctx context.Context, nc nrpc.NatsConn, s {{.GetName}
 		encodings: []string{"protobuf"},
 	}
 }
-
 func New{{.GetName}}ConcurrentHandler(workers *nrpc.WorkerPool, nc nrpc.NatsConn, s {{.GetName}}Server) *{{.GetName}}Handler {
 	return &{{.GetName}}Handler{
 		workers: workers,
@@ -131,12 +153,18 @@ func New{{.GetName}}ConcurrentHandler(workers *nrpc.WorkerPool, nc nrpc.NatsConn
 		server:  s,
 	}
 }
+{{- end }}
 
 // SetEncodings sets the output encodings when using a '*Publish' function
 func (h *{{.GetName}}Handler) SetEncodings(encodings []string) {
 	h.encodings = encodings
 }
 
+{{- if $isServiceCustomSubject }}
+func (h *{{.GetName}}Handler) Subject() string {
+	return h.subject+".>"
+}
+{{ else }}
 func (h *{{.GetName}}Handler) Subject() string {
 	return "{{$pkgSubjectPrefix}}
 	{{- range $pkgSubjectParams -}}
@@ -148,11 +176,14 @@ func (h *{{.GetName}}Handler) Subject() string {
 	{{- end -}}
 	.>"
 }
+{{- end }}
+
 {{- $serviceName := .GetName}}
 {{- $serviceSubject := GetServiceSubject .}}
 {{- $serviceSubjectParams := GetServiceSubjectParams .}}
 {{- range .Method}}
 {{- if eq .GetInputType ".nrpc.NoRequest"}}
+
 
 func (h *{{$serviceName}}Handler) {{.GetName}}Publish(
 	{{- range $pkgSubjectParams}}pkg{{.}} string, {{end -}}
@@ -194,10 +225,15 @@ func (h *{{.GetName}}Handler) Handler(msg *nats.Msg) {
 	}
 	request := nrpc.NewRequest(ctx, h.nc, msg.Subject, msg.Reply)
 	// extract method name & encoding from subject
-	{{ if ne 0 (len $pkgSubjectParams)}}pkgParams{{else}}_{{end -}},
-	{{- if ne 0 (len (GetServiceSubjectParams .))}} svcParams{{else}} _{{end -}}
-	, name, tail, err := nrpc.ParseSubject(
-		"{{$pkgSubject}}", {{len $pkgSubjectParams}}, "{{GetServiceSubject .}}", {{len (GetServiceSubjectParams .)}}, msg.Subject)
+    {{- if $isServiceCustomSubject }}
+		name, tail, err := nrpc.ParseSubjectCustom(msg.Subject)
+    {{- else }}
+		{{ if ne 0 (len $pkgSubjectParams)}}pkgParams{{else}}_{{end -}},
+		{{- if ne 0 (len (GetServiceSubjectParams .))}} svcParams{{else}} _{{end -}}
+		, name, tail, err := nrpc.ParseSubject(
+			"{{$pkgSubject}}", {{len $pkgSubjectParams}}, "{{GetServiceSubject .}}", {{len (GetServiceSubjectParams .)}}, msg.Subject)
+    {{- end }}
+
 	if err != nil {
 		log.Printf("{{.GetName}}Hanlder: {{.GetName}} subject parsing failed: %v", err)
 		return
@@ -362,7 +398,11 @@ type {{.GetName}}Client struct {
 	Timeout time.Duration
 }
 
+{{- if $isServiceCustomSubject }}
+func New{{.GetName}}Client(subject string, nc nrpc.NatsConn
+{{- else }}
 func New{{.GetName}}Client(nc nrpc.NatsConn
+{{- end }}
 	{{- range $pkgSubjectParams -}}
 	, pkgParam{{.}} string
 	{{- end -}}
@@ -378,7 +418,11 @@ func New{{.GetName}}Client(nc nrpc.NatsConn
 		{{- range $pkgSubjectParams}}
 		PkgParam{{.}}: pkgParam{{.}},
 		{{- end}}
+    {{- if $isServiceCustomSubject }}
+		Subject: subject,
+    {{ else }}
 		Subject: "{{GetServiceSubject .}}",
+    {{- end }}
 		{{- range GetServiceSubjectParams .}}
 		SvcParam{{.}}: svcParam{{.}},
 		{{- end}}
@@ -616,7 +660,11 @@ func NewClient(nc nrpc.NatsConn
 	}
 	{{- range .Service}}
 	{{- if eq 0 (len (GetServiceSubjectParams .))}}
-	c.{{.GetName}} = New{{.GetName}}Client(nc
+	c.{{.GetName}} = New{{.GetName}}Client(
+    {{- if (IsCustomSubject .) }}
+    "",
+    {{- end}}
+    nc
 	{{- range $pkgSubjectParams -}}
 		, c.pkgParam{{ . }}
 	{{- end}})

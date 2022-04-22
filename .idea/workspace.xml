@@ -4,13 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de24364c-f510-4714-b67a-4594737f95be" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/examples/alloptions/testrunner_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/examples/alloptions/testrunner_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/helloworld/greeter_server/testrunner_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/examples/helloworld/greeter_server/testrunner_test.go" afterDir="false" />
+    <list default="true" id="de24364c-f510-4714-b67a-4594737f95be" name="Changes" comment="feat: update packages, fix tests">
+      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_client/greeter_client" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_client/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_server/greeter_server" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_server/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_server/main_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_server/testrunner_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/helloworld/helloworld.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/helloworld/helloworld.nrpc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/helloworld/helloworld.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/helloworld/helloworld.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helloworld_customsubject_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/alloptions/alloptions.nrpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/examples/alloptions/alloptions.nrpc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/helloworld/helloworld/helloworld.nrpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/examples/helloworld/helloworld/helloworld.nrpc.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nrpc_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/nrpc_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testrunner_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/testrunner_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helloworld_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/helloworld_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nrpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/nrpc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nrpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/nrpc.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nrpc.proto" beforeDir="false" afterPath="$PROJECT_DIR$/nrpc.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/protoc-gen-nrpc/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/protoc-gen-nrpc/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/protoc-gen-nrpc/tmpl.go" beforeDir="false" afterPath="$PROJECT_DIR$/protoc-gen-nrpc/tmpl.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +76,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2871Crn9C7xQvfvgycSemmYssqS" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -69,6 +89,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -79,6 +100,13 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/examples" />
+      <recent name="$PROJECT_DIR$/examples/helloworld" />
+    </key>
+  </component>
   <component name="RunManager" selected="Go Test.go test nrpc">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="nrpc" />
@@ -87,6 +115,26 @@
       <kind value="FILE" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build github.com/ozanturksever/nrpc/examples/helloworld-customsubject/greeter_client" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="nrpc" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/ozanturksever/nrpc/examples/helloworld-customsubject/greeter_client" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_client/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestHelloWorldCustomSubjectExample in github.com/ozanturksever/nrpc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="nrpc" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/ozanturksever/nrpc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestHelloWorldCustomSubjectExample\E$" />
       <method v="2" />
     </configuration>
     <configuration name="TestHelloWorldExample in github.com/ozanturksever/nrpc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -110,16 +158,6 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
-    <configuration name="go test github.com/ozanturksever/nrpc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="nrpc" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="github.com/ozanturksever/nrpc" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <method v="2" />
-    </configuration>
     <configuration name="go test nrpc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="nrpc" />
       <working_directory value="$PROJECT_DIR$" />
@@ -129,11 +167,22 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+    <configuration name="helloworld_customsubject_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="nrpc" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/helloworld_customsubject_test.go" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Go Test.go test nrpc" />
+        <item itemvalue="Go Test.TestHelloWorldCustomSubjectExample in github.com/ozanturksever/nrpc" />
+        <item itemvalue="Go Build.go build github.com/ozanturksever/nrpc/examples/helloworld-customsubject/greeter_client" />
+        <item itemvalue="Go Test.helloworld_customsubject_test.go" />
         <item itemvalue="Go Test.TestHelloWorldExample in github.com/ozanturksever/nrpc" />
-        <item itemvalue="Go Test.go test github.com/ozanturksever/nrpc" />
       </list>
     </recent_temporary>
   </component>
@@ -174,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650554181827</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: update packages, fix tests">
+      <created>1650573948926</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1650573948926</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,7 +240,8 @@
     <MESSAGE value="chore: change test" />
     <MESSAGE value="replace package name" />
     <MESSAGE value="fix package path" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix package path" />
+    <MESSAGE value="feat: update packages, fix tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: update packages, fix tests" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

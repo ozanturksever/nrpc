@@ -116,19 +116,29 @@ func MarshalErrorResponse(encoding string, repErr *Error) ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
-		return json.Marshal(map[string]json.RawMessage{
-			"__error__": json.RawMessage(b),
-		})
+		return json.Marshal(
+			map[string]json.RawMessage{
+				"__error__": json.RawMessage(b),
+			},
+		)
 	default:
 		return nil, errors.New("Invalid encoding: " + encoding)
 	}
+}
+func ParseSubjectCustom(subject string) (name string, tail []string, err error) {
+	parts := strings.Split(subject, ".")
+	if len(parts) > 1 {
+		return parts[len(parts)-1], []string{}, nil
+	}
+	return "", []string{}, errors.New("subject format incorrect")
 }
 
 func ParseSubject(
 	packageSubject string, packageParamsCount int,
 	serviceSubject string, serviceParamsCount int,
 	subject string,
-) (packageParams []string, serviceParams []string,
+) (
+	packageParams []string, serviceParams []string,
 	name string, tail []string, err error,
 ) {
 	packageSubjectDepth := 0
@@ -142,7 +152,8 @@ func ParseSubject(
 	if len(tokens) < subjectMinSize {
 		err = fmt.Errorf(
 			"Invalid subject len. Expects number of parts >= %d, got %d",
-			subjectMinSize, len(tokens))
+			subjectMinSize, len(tokens),
+		)
 		return
 	}
 	if packageSubject != "" {
@@ -150,7 +161,8 @@ func ParseSubject(
 			if tokens[i] != packageSubjectPart {
 				err = fmt.Errorf(
 					"Invalid subject prefix. Expected '%s', got '%s'",
-					packageSubjectPart, tokens[i])
+					packageSubjectPart, tokens[i],
+				)
 				return
 			}
 		}
@@ -164,7 +176,8 @@ func ParseSubject(
 		if tokens[i] != serviceSubjectPart {
 			err = fmt.Errorf(
 				"Invalid subject. Service should be '%s', got '%s'",
-				serviceSubjectPart, tokens[i])
+				serviceSubjectPart, tokens[i],
+			)
 			return
 		}
 	}
@@ -206,7 +219,9 @@ func ParseSubjectTail(
 	return
 }
 
-func Call(req proto.Message, rep proto.Message, nc NatsConn, subject string, encoding string, timeout time.Duration) error {
+func Call(
+	req proto.Message, rep proto.Message, nc NatsConn, subject string, encoding string, timeout time.Duration,
+) error {
 	// encode request
 	rawRequest, err := Marshal(encoding, req)
 	if err != nil {
@@ -314,7 +329,8 @@ func (r *Request) Run() (msg proto.Message, replyError *Error) {
 	msg, replyError = CaptureErrors(
 		func() (proto.Message, error) {
 			return r.Handler(ctx)
-		})
+		},
+	)
 	return
 }
 
@@ -387,7 +403,8 @@ func (r *Request) setupStreamedReply() {
 	}
 	r.StreamContext, r.StreamCancel = context.WithCancel(r.Context)
 	r.KeepStreamAlive = NewKeepStreamAlive(
-		r.Conn, r.ReplySubject, r.Encoding, r.StreamCancel)
+		r.Conn, r.ReplySubject, r.Encoding, r.StreamCancel,
+	)
 }
 
 // StreamedReply returns true if the request reply is streamed
@@ -425,10 +442,12 @@ func (r *Request) sendReply(resp proto.Message, withError *Error) error {
 
 // SendErrorTooBusy cancels the request with a 'SERVERTOOBUSY' error
 func (r *Request) SendErrorTooBusy(msg string) error {
-	return r.SendReply(nil, &Error{
-		Type:    Error_SERVERTOOBUSY,
-		Message: msg,
-	})
+	return r.SendReply(
+		nil, &Error{
+			Type:    Error_SERVERTOOBUSY,
+			Message: msg,
+		},
+	)
 }
 
 var ErrEOS = errors.New("End of stream")
@@ -545,7 +564,8 @@ func (sub *StreamCallSubscription) Next(rep proto.Message) error {
 				if nrpcErr.GetMsgCount() != sub.msgCount {
 					log.Printf(
 						"nrpc: received invalid number of messages. Expected %d, got %d",
-						nrpcErr.GetMsgCount(), sub.msgCount)
+						nrpcErr.GetMsgCount(), sub.msgCount,
+					)
 				}
 				if nrpcErr.GetType() == Error_EOS {
 					if nrpcErr.GetMsgCount() != sub.msgCount {
@@ -564,7 +584,9 @@ func (sub *StreamCallSubscription) Next(rep proto.Message) error {
 	return nil
 }
 
-func StreamCall(ctx context.Context, nc NatsConn, subject string, req proto.Message, encoding string, timeout time.Duration) (*StreamCallSubscription, error) {
+func StreamCall(
+	ctx context.Context, nc NatsConn, subject string, req proto.Message, encoding string, timeout time.Duration,
+) (*StreamCallSubscription, error) {
 	rawRequest, err := Marshal(encoding, req)
 	if err != nil {
 		log.Printf("nrpc: inner request marshal failed: %v", err)
