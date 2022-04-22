@@ -4,29 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de24364c-f510-4714-b67a-4594737f95be" name="Changes" comment="feat: update packages, fix tests">
-      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_client/greeter_client" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_client/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_server/greeter_server" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_server/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_server/main_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/greeter_server/testrunner_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/helloworld/helloworld.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/helloworld/helloworld.nrpc.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/helloworld/helloworld.pb.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/helloworld-customsubject/helloworld/helloworld.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/helloworld_customsubject_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="de24364c-f510-4714-b67a-4594737f95be" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/alloptions/alloptions.nrpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/examples/alloptions/alloptions.nrpc.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/helloworld/helloworld/helloworld.nrpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/examples/helloworld/helloworld/helloworld.nrpc.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helloworld_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/helloworld_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nrpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/nrpc.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nrpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/nrpc.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nrpc.proto" beforeDir="false" afterPath="$PROJECT_DIR$/nrpc.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/protoc-gen-nrpc/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/protoc-gen-nrpc/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/protoc-gen-nrpc/tmpl.go" beforeDir="false" afterPath="$PROJECT_DIR$/protoc-gen-nrpc/tmpl.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -230,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650573948926</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat: add custom/free subject format">
+      <created>1650619588383</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1650619588383</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,7 +227,8 @@
     <MESSAGE value="replace package name" />
     <MESSAGE value="fix package path" />
     <MESSAGE value="feat: update packages, fix tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: update packages, fix tests" />
+    <MESSAGE value="feat: add custom/free subject format" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add custom/free subject format" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
